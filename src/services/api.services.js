@@ -29,3 +29,15 @@ export const loginUser = async (formData) => {
     console.error(error.message)
   }
 }
+
+export const resetPasswordRequest = async (formData) => {
+  try {
+    const response = await apiClient.post('/auth/reset-password-request', formData)
+
+    if (response.status === 200) {
+      return response.data
+    }
+  } catch (error) {
+    console.error(error.message)
+  }
+}
