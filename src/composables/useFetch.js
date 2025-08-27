@@ -12,15 +12,15 @@ const apiClient = axios.create({
 })
 const toast = useToast()
 
-export const useFetch = (url, options) => {
+export const useFetch = (url, { method = 'get', data: body = null, config = {} }) => {
   const data = ref(null)
   const error = ref(null)
   const loading = ref(false)
 
-  const fetchData = async () => {
+  const performAPIRequest = async () => {
     loading.value = true
     try {
-      const response = await apiClient.get(url, options)
+      const response = await apiClient.request(url, { method, data: body, ...config })
       if (response.data.status === 'success') {
         toast.success(response.data.message)
       }
@@ -37,6 +37,6 @@ export const useFetch = (url, options) => {
     data,
     error,
     loading,
-    fetchData,
+    performAPIRequest,
   }
 }
