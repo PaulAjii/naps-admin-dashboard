@@ -13,7 +13,12 @@ export const auth = {
   login: (credentials) => apiClient.post('/auth/login', credentials),
   passwordResetRequest: (credentials) =>
     apiClient.post(`/auth/reset-password-request`, credentials),
-  changePassword: (credentials) => apiClient.post('/auth/change-password', credentials),
+  changePassword: (credentials, token) =>
+    apiClient.post('/auth/change-password', credentials, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
   update: (id, userData) => apiClient.patch(`/users/${id}`, userData),
   remove: (id) => apiClient.delete(`/users/${id}`),
 }
