@@ -31,10 +31,23 @@ const useAuthStore = defineStore('auth', () => {
     return data.message
   }
 
+  const changePassword = async (userData, token) => {
+    const response = await auth.changePassword(userData, token)
+    const { data } = response
+
+    if (data.status === 'error') {
+      return Promise.reject(new Error(data.message))
+    }
+
+    user.value = data.data.user
+    return data.message
+  }
+
   return {
     user,
     login,
     resetPasswordRequest,
+    changePassword,
   }
 })
 
