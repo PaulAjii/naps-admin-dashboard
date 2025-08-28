@@ -78,6 +78,8 @@ const handleSubmit = async () => {
 
     if (authStore.user.isFirstLogin === true) {
       router.push('/auth/change-password')
+    } else {
+      router.push('/dashboard')
     }
   } catch (error) {
     toast.error(error.response?.data?.message)
