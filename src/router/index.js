@@ -16,6 +16,12 @@ const router = createRouter({
       component: ResetPassword,
       name: 'Reset Password',
     },
+
+    {
+      path: '/auth/change-password',
+      component: () => import('../views/ChangePassword.vue'),
+      name: 'Change Password',
+    },
   ],
 })
 
