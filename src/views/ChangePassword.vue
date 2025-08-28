@@ -50,6 +50,7 @@ import LoadingBubble from '@/components/LoadingBubble.vue'
 import { ref } from 'vue'
 import useAuthStore from '@/stores/auth'
 import { useToast } from 'vue-toastification'
+import { useRouter } from 'vue-router'
 
 const formData = ref({
   oldPassword: '',
@@ -58,6 +59,7 @@ const formData = ref({
 
 const isLoading = ref(false)
 const toast = useToast()
+const router = useRouter()
 
 const authStore = useAuthStore()
 
@@ -69,6 +71,8 @@ const handleSubmit = async () => {
 
     formData.value.oldPassword = ''
     formData.value.newPassword = ''
+
+    router.push('/dashboard')
   } catch (error) {
     toast.error(error.response?.data?.message)
   } finally {
