@@ -13,7 +13,7 @@ export const auth = {
   login: (credentials) => apiClient.post('/auth/login', credentials),
   passwordResetRequest: (credentials) =>
     apiClient.post(`/auth/reset-password-request`, credentials),
-  create: (userData) => apiClient.post('/users', userData),
+  changePassword: (credentials) => apiClient.post('/auth/change-password', credentials),
   update: (id, userData) => apiClient.patch(`/users/${id}`, userData),
   remove: (id) => apiClient.delete(`/users/${id}`),
 }
