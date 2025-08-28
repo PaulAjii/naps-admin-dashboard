@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import ResetPassword from '@/views/ResetPassword.vue'
+import DashboardPage from '@/views/DashboardPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +22,12 @@ const router = createRouter({
       path: '/auth/change-password',
       component: () => import('../views/ChangePassword.vue'),
       name: 'Change Password',
+    },
+
+    {
+      path: '/dashboard',
+      component: DashboardPage,
+      name: 'Dashboard',
     },
   ],
 })
