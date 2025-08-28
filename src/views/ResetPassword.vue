@@ -48,35 +48,31 @@
 <script setup>
 import LoadingBubble from '@/components/LoadingBubble.vue'
 import { ref } from 'vue'
-import { resetPasswordRequest } from '@/services/api.services'
 import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
+import useAuthStore from '@/stores/auth'
 
 const formData = ref({
   username: '',
   position: '',
 })
 
+const authStore = useAuthStore()
 const toast = useToast()
 const isLoading = ref(false)
 const router = useRouter()
 
 const handleSubmit = async () => {
+  isLoading.value = true
   try {
-    isLoading.value = true
+    const message = await authStore.resetPasswordRequest(formData.value)
 
-    const response = await resetPasswordRequest(formData.value)
-
-    if (response.status === 'success') {
-      toast.success(response.message)
-      console.log(response)
-      formData.value.username = ''
-      formData.value.password = ''
-    }
+    toast.success(message)
+    formData.value.username = ''
+    formData.value.position = ''
     router.push('/login')
   } catch (error) {
-    console.error(error)
-    toast.error(error.message || 'An error occurred.')
+    toast.error(error.response?.data?.message || 'An error occurred.')
   } finally {
     isLoading.value = false
   }
