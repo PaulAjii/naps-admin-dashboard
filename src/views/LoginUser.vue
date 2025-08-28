@@ -52,7 +52,7 @@
 <script setup>
 import LoadingBubble from '@/components/LoadingBubble.vue'
 import { ref } from 'vue'
-import { loginUser } from '@/services/api.services'
+import useAuthStore from '@/stores/auth'
 import { useToast } from 'vue-toastification'
 
 const formData = ref({
@@ -60,24 +60,21 @@ const formData = ref({
   password: '',
 })
 
-const toast = useToast()
 const isLoading = ref(false)
+const toast = useToast()
+
+const authStore = useAuthStore()
 
 const handleSubmit = async () => {
+  isLoading.value = true
   try {
-    isLoading.value = true
+    const message = await authStore.login(formData.value)
+    toast.success(message)
 
-    const response = await loginUser(formData.value)
-
-    if (response.status === 'success') {
-      toast.success(response.message)
-      console.log(response)
-      formData.value.username = ''
-      formData.value.password = ''
-    }
+    formData.value.password = ''
+    formData.value.username = ''
   } catch (error) {
-    console.error(error)
-    toast.error(error.message || 'An error occurred.')
+    toast.error(error.response?.data?.message)
   } finally {
     isLoading.value = false
   }
