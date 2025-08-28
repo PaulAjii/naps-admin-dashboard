@@ -45,6 +45,7 @@ const useAuthStore = defineStore('auth', () => {
 
   return {
     user,
+    token,
     login,
     resetPasswordRequest,
     changePassword,
