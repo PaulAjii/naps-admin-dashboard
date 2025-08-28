@@ -54,6 +54,7 @@ import LoadingBubble from '@/components/LoadingBubble.vue'
 import { ref } from 'vue'
 import useAuthStore from '@/stores/auth'
 import { useToast } from 'vue-toastification'
+import { useRouter } from 'vue-router'
 
 const formData = ref({
   username: '',
@@ -62,6 +63,7 @@ const formData = ref({
 
 const isLoading = ref(false)
 const toast = useToast()
+const router = useRouter()
 
 const authStore = useAuthStore()
 
@@ -73,6 +75,10 @@ const handleSubmit = async () => {
 
     formData.value.password = ''
     formData.value.username = ''
+
+    if (authStore.user.isFirstLogin === true) {
+      router.push('/auth/change-password')
+    }
   } catch (error) {
     toast.error(error.response?.data?.message)
   } finally {
