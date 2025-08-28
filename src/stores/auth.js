@@ -4,7 +4,7 @@ import { auth } from '@/services/api.services'
 import { ref } from 'vue'
 
 const useAuthStore = defineStore('auth', () => {
-  const user = ref(null)
+  const user = useLocalStorage('user', null)
   const token = useLocalStorage('token', null)
 
   const login = async (userData) => {
