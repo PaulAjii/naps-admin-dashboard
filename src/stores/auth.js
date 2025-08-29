@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { useLocalStorage } from '@/composables/storage'
 import { auth } from '@/services/api.services'
-import { ref } from 'vue'
 
 const useAuthStore = defineStore('auth', () => {
   const user = useLocalStorage('user', null)
@@ -38,8 +37,7 @@ const useAuthStore = defineStore('auth', () => {
     if (data.status === 'error') {
       return Promise.reject(new Error(data.message))
     }
-
-    user.value = data.data.user
+    user.value = data.data
     return data.message
   }
 
